@@ -1,0 +1,83 @@
+pipeline {
+    agent any
+
+    environment {
+        TF_IN_AUTOMATION = "true"
+        ARM_CLIENT_ID = credentials('ARM-CLIENT-ID')
+        ARM_CLIENT_SECRET = credentials('ARM-CLIENT-SECRET')
+        ARM_TENANT_ID = credentials('ARM-TENANT-ID')
+        ARM_SUBSCRIPTION_ID = credentials('ARM-SUBSCRIPTION-ID')
+    }
+
+    stages {
+        stage('Checkout Code') {
+            when {
+                changeset "**/infra/**"
+            }
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Terraform Init') {
+            when {
+                changeset "**/infra/**"
+            }
+            steps {
+                dir('infra/envs/dev'){
+                    bat 'terraform init'
+                }
+            }
+        }
+        
+        stage('Terraform Validate') {
+            when {
+                changeset "**/infra/**"
+            }
+            steps {
+                dir('infra/envs/dev'){
+                    bat 'terraform validate'
+                }
+            }
+        }
+
+        stage('Terraform Plan') {
+            when {
+                changeset "**/infra/**"
+            }
+            steps {
+                dir('infra/envs/dev'){
+                    bat 'terraform plan -out=tfplan'
+                }
+            }
+        }
+
+        stage('Approval Before Apply') {
+            when {
+                changeset "**/infra/**"
+            }
+            steps {
+                timeout(time: 10, unit: 'MINUTES') {
+                    input message: "Apply Terraform changes?"
+                }
+            }
+        }
+
+        stage('Terraform Apply') {
+            when {
+                changeset "**/infra/**"
+            }
+            steps {
+                dir('infra/envs/dev') {
+                    bat 'terraform apply -auto-approve tfplan'
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            echo "Pipeline Completed"
+        }
+    }
+}
