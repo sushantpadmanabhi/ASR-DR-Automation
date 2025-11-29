@@ -11,12 +11,18 @@ pipeline {
 
     stages {
         stage('Checkout Code') {
+            when {
+                changeset "**/infra/**"
+            }
             steps {
                 checkout scm
             }
         }
 
         stage('Terraform Init') {
+            when {
+                changeset "**/infra/**"
+            }
             steps {
                 dir('infra/envs/dev'){
                     bat 'terraform init'
@@ -25,6 +31,9 @@ pipeline {
         }
         
         stage('Terraform Validate') {
+            when {
+                changeset "**/infra/**"
+            }
             steps {
                 dir('infra/envs/dev'){
                     bat 'terraform validate'
@@ -33,6 +42,9 @@ pipeline {
         }
 
         stage('Terraform Plan') {
+            when {
+                changeset "**/infra/**"
+            }
             steps {
                 dir('infra/envs/dev'){
                     bat 'terraform plan -out=tfplan'
@@ -41,6 +53,9 @@ pipeline {
         }
 
         stage('Approval Before Apply') {
+            when {
+                changeset "**/infra/**"
+            }
             steps {
                 timeout(time: 10, unit: 'MINUTES') {
                     input message: "Apply Terraform changes?"
@@ -49,6 +64,9 @@ pipeline {
         }
 
         stage('Terraform Apply') {
+            when {
+                changeset "**/infra/**"
+            }
             steps {
                 dir('infra/envs/dev') {
                     bat 'terraform apply -auto-approve tfplan'
