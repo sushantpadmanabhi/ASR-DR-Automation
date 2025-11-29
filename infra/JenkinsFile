@@ -40,14 +40,6 @@ pipeline {
             }
         }
 
-        stage('Approval Before Apply') {
-            steps {
-                timeout(time: 10, unit: 'MINUTES') {
-                    input message: "Apply Terraform changes?"
-                }
-            }
-        }
-
         stage('Terraform Apply') {
             steps {
                 dir('infra/envs/dev') {
