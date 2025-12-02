@@ -1,0 +1,27 @@
+variable "rg_name" { 
+
+}
+variable "location" {
+  
+}
+variable "vnet_name" {
+  
+}
+variable "address_space" {
+  
+}
+variable "subnet_name" {
+  
+}
+variable "subnet_prefix" {
+  
+}
+variable "nsg_name" {
+  
+}
+variable "subscription_id" {
+  
+}
+variable "vault_name" {
+  
+}
