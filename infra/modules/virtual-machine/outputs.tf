@@ -5,3 +5,7 @@ output "vm_id" {
 output "nic_id" {
   value = azurerm_network_interface.nic.id
 }
+
+output "os_disk_id" {
+  value = data.azurerm_managed_disk.os_disk.id
+}

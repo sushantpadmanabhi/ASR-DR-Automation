@@ -3,12 +3,11 @@ data "terraform_remote_state" "dev" {
 
   config = {
     resource_group_name  = "rg-tfstate-asr"
-    storage_account_name = "<your-tfstate-storage-account>"
+    storage_account_name = "sttfstateasr29928"
     container_name       = "tfstate"
     key                  = "asr-dev.tfstate"
   }
 }
-
 
 module "rg_dr" {
   source = "../../modules/resource-group"
@@ -58,18 +57,4 @@ module "asr_replication_policy" {
   policy_name = var.policy_name
   vault_name = module.recovery_vault_dr.name
   resource_group_name = module.rg_dr.name
-}
-
-module "asr_network_mapping" {
-  source = "../../modules/asr-network-mapping"
-
-  name = var.asr_network_mapping_name
-  resource_group_name = module.rg_dr.name
-  vault_name = module.recovery_vault_dr.name
-
-  primary_fabric_name = "Azure"
-  secondary_fabric_name = "Azure"
-
-  primary_vnet_id = module.vnet_dev.vnet_id
-  secondary_vnet_id = module.vnet_dr.vnet_id
 }

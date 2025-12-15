@@ -39,3 +39,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   tags = var.tags
 }
+
+data "azurerm_managed_disk" "os_disk" {
+  name                = azurerm_linux_virtual_machine.vm.os_disk[0].name
+  resource_group_name = var.resource_group_name
+}

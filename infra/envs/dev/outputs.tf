@@ -17,3 +17,6 @@ output "vm_id" {
 output "nic_id" {
   value = module.vm_dev.nic_id
 }
+output "os_disk_id" {
+  value = module.vm_dev.os_disk_id
+}
