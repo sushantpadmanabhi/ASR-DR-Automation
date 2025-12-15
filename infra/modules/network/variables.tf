@@ -1,29 +1,21 @@
 variable "vnet_name" {
   type = string
-  description = "Name of Virtual Network"
 }
-
 variable "address_space" {
   type = list(string)
-  description = "Address spac of VNet"
 }
-
-variable "vnet_location" {
+variable "location" {
   type = string
-  description = "Azure Region for VNet"
 }
-
-variable "resource_group" {
+variable "resource_group_name" {
   type = string
-  description = "Name of Resource Group"
 }
-
+variable "tags" {
+  type = map(string)
+}
 variable "subnet_name" {
   type = string
-  description = "Name of subnet"
 }
-
-variable "subnet_prefix" {
+variable "subnet_address_prefixes" {
   type = list(string)
-  description = "Subnet address prefix"
 }

@@ -1,34 +1,47 @@
-module "rg" {
+module "rg_dev" {
   source = "../../modules/resource-group"
   name = var.rg_name
   location = var.location
+  tags = var.tags
 }
 
-module "network" {
+module "vnet_dev" {
   source = "../../modules/network"
   vnet_name = var.vnet_name
-  vnet_location = var.location
   address_space = var.address_space
   subnet_name = var.subnet_name
-  subnet_prefix = var.subnet_prefix
-  resource_group = module.rg.name
+  subnet_address_prefixes = var.subnet_address_prefix
+  location = module.rg_dev.location
+  resource_group_name = module.rg_dev.name
+  tags = var.tags
 }
 
-module "nsg" {
+module "nsg_dev" {
   source = "../../modules/nsg"
-  nsg_name = var.nsg_name
-  location = module.rg.location
-  resource_group = module.rg.name
-  subnet_id = module.network.subnet_id
+  name = var.nsg_name
+  location = module.rg_dev.location
+  resource_group_name = module.rg_dev.name
+  subnet_id = module.vnet_dev.subnet_id
+  tags = var.tags
 }
 
-module "vm" {
+module "storage_dev" {
+  source = "../../modules/storage-account"
+  name = var.storage_name
+  location = module.rg_dev.location
+  resource_group_name = module.rg_dev.name
+  tags = var.tags
+}
+
+module "vm_dev" {
   source = "../../modules/virtual-machine"
   vm_name = var.vm_name
-  vm_size = var.vm_size
+  location = module.rg_dev.location
+  resource_group_name = module.rg_dev.name
+  subnet_id = module.vnet_dev.subnet_id
+
   admin_username = var.admin_username
   admin_password = var.admin_password
-  subnet_id = module.network.subnet_id
-  location = module.rg.location
-  resource_group = module.rg.name
+
+  tags = var.tags
 }

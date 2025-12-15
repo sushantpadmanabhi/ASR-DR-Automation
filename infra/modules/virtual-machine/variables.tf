@@ -1,36 +1,34 @@
 variable "vm_name" {
   type = string
-  description = "Name of the Virtual Machine"
 }
 
 variable "location" {
   type = string
-  description = "Azure Region"
 }
 
-variable "resource_group" {
+variable "resource_group_name" {
   type = string
-  description = "Resource Group Name"
 }
 
 variable "subnet_id" {
   type = string
-  description = "Subnet ID to attach to NIC"
 }
 
 variable "vm_size" {
-  type = string
-  description = "Size of the VM"
-  default = "Standard_B2s"
+  type    = string
+  default = "Standard_B1ms"
 }
 
 variable "admin_username" {
   type = string
-  description = "Admin username for VM"
 }
 
 variable "admin_password" {
-  type = string
+  type      = string
   sensitive = true
-  description = "Admin password for VM"
+}
+
+variable "tags" {
+  type    = map(string)
+  default = {}
 }

@@ -5,5 +5,11 @@ variable "name" {
 
 variable "location" {
   type = string
-  description = "Azure Region for the Resource Group"
+}
+
+variable "tags" {
+  type = map(string)
+  default = {
+    
+  }
 }
