@@ -1,0 +1,12 @@
+rg_name  = "rg-asr-dr"
+location = "South India"
+primary_location = "Central India"
+vnet_name = "vnet-asr-dr"
+address_space = ["10.20.0.0/16"]
+subnet_name = "subnet-dr"
+subnet_address_prefix = ["10.20.1.0/24"]
+nsg_name = "nsg-asr-dr"
+storage_name = "stasrdrreplication"
+recovery_vault_name = "rsv-asr-dr"
+policy_name = "asr-default-policy"
+asr_network_mapping_name = "asr-network-mapping"

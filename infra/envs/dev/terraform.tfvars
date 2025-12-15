@@ -1,0 +1,11 @@
+rg_name  = "rg-asr-dev"
+location = "Central India"
+vnet_name = "vnet-asr-dev"
+address_space = ["10.10.0.0/16"]
+subnet_name = "subnet-dev"
+subnet_address_prefix = ["10.10.1.0/24"]
+nsg_name = "nsg-asr-dev"
+storage_name = "stasrdevbootdiag"
+vm_name        = "vm-asr-dev"
+admin_username = "azureuser"
+admin_password = "ChangeThisPassword@123"
